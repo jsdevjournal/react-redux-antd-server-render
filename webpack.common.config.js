@@ -79,7 +79,15 @@ function client(env) {
           test: /\.(scss|css$)$/,
           exclude: /node_modules/,
           loader: ExtractTextPlugin.extract('style', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
-        }
+        },
+        {
+          test: /\.(png|jpg|svg|ico)$/,
+          loader: "file?name=images/[name].[ext]"
+        },
+        {
+          test: /\.(ttf|woff|eot|ttf|otf|woff2)$/,
+          loader: "file?name=fonts/[name].[ext]"
+        },
       ]
     },
     postcss: function(webpack) {
@@ -124,7 +132,15 @@ function server(env) {
           test: /\.(scss|css$)$/,
           exclude: /node_modules/,
           loader: 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
-        }
+        },
+        {
+          test: /\.(png|jpg|svg|ico)$/,
+          loader: "file?name=images/[name].[ext]"
+        },
+        {
+          test: /\.(ttf|woff|eot|ttf|otf|woff2)$/,
+          loader: "file?name=fonts/[name].[ext]"
+        },
       ]
     }
   }
