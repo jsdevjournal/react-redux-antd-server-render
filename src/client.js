@@ -1,19 +1,9 @@
 import React from 'react'
-import { Router, browserHistory } from 'react-router'
 import { render } from 'react-dom'
-import createStore from './stores/createStore'
-import createRoute from './createRoute'
-import { Provider } from 'react-redux'
-
-const store = createStore(window.__data)
+import AppRoot from './AppRoot'
 
 render(
-  <Provider store={store}>
-    <Router
-      history={browserHistory} >
-      {createRoute(store)}
-    </Router>
-  </Provider>,
+  <AppRoot />,
   document.getElementById('root')
 )
 
