@@ -130,7 +130,6 @@ function server(env) {
   }
 }
 
-// module.exports = client
 module.exports = function(env) {
   return [server(env), client(env)]
 }
