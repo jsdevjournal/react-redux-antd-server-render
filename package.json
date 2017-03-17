@@ -1,8 +1,31 @@
 {
-  "name": "test",
+  "name": "react-redux-antd-server-render",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A boilerplate includes react redux antd flexbox and server render support",
+  "author": {
+    "name": "Krit Hoonsuwan",
+    "email": "suns_stat@hotmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/durunvo/react-redux-antd-server-render.git"
+  },
+  "bugs": {
+    "url": "https://github.com/durunvo/react-redux-antd-server-render/issues"
+  },
+  "keywords": [
+    "css modules",
+    "flexbox",
+    "grid",
+    "react",
+    "antd",
+    "ssr",
+    "server render",
+    "redux",
+    "hot reload",
+    "express"
+  ],
+  "license": "MIT",
   "scripts": {
     "start": "better-npm-run start-prod",
     "dev": "better-npm-run start-dev",
