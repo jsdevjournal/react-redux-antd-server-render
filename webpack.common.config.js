@@ -103,7 +103,7 @@ function client(env) {
 function server(env) {
   return {
     name: 'server',
-    devtool: env === 'prod' ? 'source-map' : 'eval',
+    devtool: 'eval',
     entry: './src/server.js',
     output: {
       path: path.join(__dirname, 'dist'),

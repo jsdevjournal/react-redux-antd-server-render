@@ -34,7 +34,7 @@ if (env === 'development') {
   )
 }
 
-app.use(Express.static(path.resolve(__dirname + '/../dist'), { maxAge: 86400000 }))
+app.use(Express.static(path.resolve(__dirname + '/../public'), { maxAge: 86400000 }))
 app.use('/static', Express.static(path.resolve(__dirname + '/../dist'), { maxAge: 86400000 }))
 
 app.use(require('../dist/SSR').default)
