@@ -1,7 +1,6 @@
 import React from 'react'
 import style from '../../styles/theme.scss'
 import style2 from './style.css'
-// import { Col, Row } from 'react-styled-flexboxgrid'
 import { DatePicker } from 'antd';
 import Profile from '../../assets/images/KD-Profile.png'
 import { Row, Col, Icon, LocaleProvider, Layout, Menu, Breadcrumb } from 'antd';
