@@ -54,8 +54,6 @@
       }
     }
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "antd": "^2.8.1",
     "babel-cli": "^6.14.0",
