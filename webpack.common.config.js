@@ -43,7 +43,8 @@ function client(env) {
       new ExtractTextPlugin('style.css'),
       new webpack.DefinePlugin({
         "process.env": {
-          'client': JSON.stringify(true)
+          'client': JSON.stringify(true),
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
         }
       }),
       ifDev(env, new webpack.HotModuleReplacementPlugin()),
@@ -116,7 +117,8 @@ function server(env) {
     plugins: noUndefined([
       new webpack.DefinePlugin({
         "process.env": {
-          'client': JSON.stringify(true)
+          'client': JSON.stringify(true),
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
         }
       }),
     ]),
