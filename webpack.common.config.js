@@ -105,7 +105,7 @@ function server(env) {
   return {
     name: 'server',
     devtool: 'eval',
-    entry: './src/server.js',
+    entry: ['babel-polyfill', './src/server.js'],
     output: {
       path: path.join(__dirname, 'dist'),
       filename: 'SSR.js',
