@@ -1,10 +1,10 @@
 import React from 'react'
 import style from '../../styles/theme.scss'
 import style2 from './style.css'
-import { Col, Row } from 'react-styled-flexboxgrid'
+// import { Col, Row } from 'react-styled-flexboxgrid'
 import { DatePicker } from 'antd';
 import Profile from '../../assets/images/KD-Profile.png'
-import { LocaleProvider, Layout, Menu, Breadcrumb } from 'antd';
+import { Row, Col, Icon, LocaleProvider, Layout, Menu, Breadcrumb } from 'antd';
 const { Header, Content, Footer } = Layout;
 import enUS from 'antd/lib/locale-provider/en_US';
 
@@ -31,12 +31,11 @@ export default () => {
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-            <Row center="xs" className={style.test}>
-              <Col xs={12} md={4}><img src={Profile} /></Col>
-              <Col xs={12} md={4}>test1</Col>
-              <Col xs={12} md={4} className={style2.test2}>test2</Col>
-              <Col xs={12} md={4}>test3</Col>
-              <Col xs={12} md={4}><DatePicker /></Col>
+            <Row gutter={24} className={style.test}>
+              <Col xs={24} md={6}><Icon type="step-backward" />test1</Col>
+              <Col xs={24} md={6} className={style2.test2}>test2</Col>
+              <Col xs={24} md={6}><img className={style2.maxWidth} src={Profile} /></Col>
+              <Col xs={24} md={6}><DatePicker /></Col>
             </Row>
           </div>
         </Content>

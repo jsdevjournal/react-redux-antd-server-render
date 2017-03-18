@@ -74,12 +74,12 @@ function client(env) {
         {
           test: /\.(scss|css$)$/,
           include: [/node_modules\/.*antd/],
-          loader: ExtractTextPlugin.extract('style', 'css-loader')
+          loader: ExtractTextPlugin.extract('style', 'css')
         },
         {
           test: /\.(scss|css$)$/,
           exclude: /node_modules/,
-          loader: ExtractTextPlugin.extract('style', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
+          loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
         },
         {
           test: /\.(png|jpg|svg|ico)$/,
@@ -133,7 +133,7 @@ function server(env) {
         {
           test: /\.(scss|css$)$/,
           exclude: /node_modules/,
-          loader: 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+          loader: 'css/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
         },
         {
           test: /\.(png|jpg|svg|ico)$/,
