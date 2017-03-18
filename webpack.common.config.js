@@ -44,7 +44,7 @@ function client(env) {
       new webpack.DefinePlugin({
         "process.env": {
           'client': JSON.stringify(true),
-          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }
       }),
       ifDev(env, new webpack.HotModuleReplacementPlugin()),
@@ -117,8 +117,8 @@ function server(env) {
     plugins: noUndefined([
       new webpack.DefinePlugin({
         "process.env": {
-          'client': JSON.stringify(true),
-          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+          'client': JSON.stringify(false),
+          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }
       }),
     ]),

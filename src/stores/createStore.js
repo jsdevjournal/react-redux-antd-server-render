@@ -1,16 +1,36 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
+import createSaga from 'redux-saga';
+
 import reducers from '../reducers'
+import sagas from '../sagas';
 
 export default function (initialState = {}) {
+
+  const saga = createSaga();
+
+  const middleware = [
+    saga
+  ];
+
+  let devToolsExtension = f => f
+  if (process.env.NODE_ENV === 'development' && process.env.client) {
+    middleware.push(require('redux-logger')())
+    if (window.devToolsExtension) devToolsExtension = window.devToolsExtension()
+  }
+
+  const enhancer = compose(applyMiddleware(...middleware), devToolsExtension)
 
   const store = createStore(
     combineReducers({
       ...reducers,
       routing: routerReducer
     }),
-    initialState
+    initialState,
+    enhancer
   )
+
+  saga.run(sagas)
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

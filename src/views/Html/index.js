@@ -26,7 +26,9 @@ export default class Html extends Component {
       <html lang="en-us">
         <head>
           <title>Title</title>
+          <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="stylesheet" href="/static/style.css" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         </head>
         <body>
           <div id="root" dangerouslySetInnerHTML={{__html: content}}/>
