@@ -58,6 +58,10 @@ function client(env) {
         }
       }))
     ]),
+    resolve: {
+      root: path.resolve('./src'),
+      extensions: ['', '.js']
+    },
     module: {
       loaders: [
         {
@@ -122,6 +126,10 @@ function server(env) {
         }
       }),
     ]),
+    resolve: {
+      root: path.resolve('./src'),
+      extensions: ['', '.js']
+    },
     module: {
       loaders: [
         {
