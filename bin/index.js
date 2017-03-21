@@ -1,10 +1,13 @@
 const Express = require('express')
 const path = require('path')
+const compression = require('compression')
 
 const app = Express()
 const port = process.env.PORT || 3000
 const host = process.env.HOST || "0.0.0.0"
 const env = process.env.NODE_ENV || 'development'
+
+app.use(compression())
 
 if (env === 'development') {
   const webpackDevMiddleware = require('webpack-dev-middleware')
