@@ -1,10 +1,12 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import Html from './views/Html'
-import createStore from './stores/createStore'
+import Html from 'views/Html'
+import createStore from 'stores/createStore'
 import { Provider } from 'react-redux'
 import { match, RouterContext } from 'react-router'
 import createRoute from './createRoute'
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 
 export default (req, res) => {
 
@@ -19,7 +21,9 @@ export default (req, res) => {
     } else if (renderProps) {
       const component = (
         <Provider store={store}>
-          <RouterContext {...renderProps} />
+          <LocaleProvider locale={enUS}>
+            <RouterContext {...renderProps} />
+          </LocaleProvider>
         </Provider>
       )
       res.status(200).send('<!DOCTYPE HTML>\n' + renderToString(<Html store={store} component={component} />))

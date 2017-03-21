@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
-import createStore from './stores/createStore'
 import { Provider } from 'react-redux'
-import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
-import createRoute from './createRoute'
+import { Router } from 'react-router'
+import createRoute from 'createRoute'
+import { LocaleProvider } from 'antd'
+import enUS from 'antd/lib/locale-provider/en_US'
 
-const store = createStore(window.__data)
-const history = syncHistoryWithStore(browserHistory, store)
 
 export default class AppRoot extends Component {
+
   render() {
+    const { store, history } = this.props
     return (
       <Provider store={store}>
-        <Router
-          history={history} >
-          {createRoute(store)}
-        </Router>
+        <LocaleProvider locale={enUS}>
+          <Router
+            history={history} >
+            {createRoute(store)}
+          </Router>
+        </LocaleProvider>
       </Provider>
     )
   }

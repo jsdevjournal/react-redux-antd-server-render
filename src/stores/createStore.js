@@ -2,8 +2,8 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import createSaga from 'redux-saga';
 
-import reducers from '../reducers'
-import sagas from '../sagas';
+import reducers from 'reducers/index'
+import sagas from 'sagas/index';
 
 export default function (initialState = {}) {
 
