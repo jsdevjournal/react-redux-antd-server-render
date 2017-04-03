@@ -1,16 +1,16 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
-import createSaga from 'redux-saga';
+import { createStore, applyMiddleware, compose } from 'redux'
+import createSagaMiddleware, { END } from 'redux-saga';
+import { routerMiddleware } from 'react-router-redux'
 
 import reducers from 'reducers/index'
-import sagas from 'sagas/index';
+import rootSaga from 'sagas/index';
 
-export default function (initialState = {}) {
+export default function (history, initialState = {}) {
 
-  const saga = createSaga();
+  const sagaMiddleware = createSagaMiddleware();
 
   const middleware = [
-    saga
+    routerMiddleware(history)
   ];
 
   let devToolsExtension = f => f
@@ -19,18 +19,19 @@ export default function (initialState = {}) {
     if (window.devToolsExtension) devToolsExtension = window.devToolsExtension()
   }
 
+  middleware.push(sagaMiddleware)
+
   const enhancer = compose(applyMiddleware(...middleware), devToolsExtension)
 
   const store = createStore(
-    combineReducers({
-      ...reducers,
-      routing: routerReducer
-    }),
+    reducers,
     initialState,
     enhancer
   )
 
-  saga.run(sagas)
+  store.sagaTask = sagaMiddleware.run(rootSaga);
+
+  store.close = () => store.dispatch(END)
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
