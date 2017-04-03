@@ -9,9 +9,8 @@ import { Row, Col, Icon, Layout, Menu, Breadcrumb } from 'antd'
 const { Header, Content, Footer } = Layout
 
 
-
 @connect(state => state, { someAction })
-export class App extends Component {
+export default class App extends Component {
 
   constructor(props) {
     super(props)
