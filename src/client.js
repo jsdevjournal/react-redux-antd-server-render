@@ -7,7 +7,7 @@ import createStore from 'stores/createStore'
 
 document.getElementById('initial-data').innerHTML = ''
 
-const store = createStore(window.__data)
+const store = createStore(browserHistory, window.__data)
 const history = syncHistoryWithStore(browserHistory, store)
 
 render(
