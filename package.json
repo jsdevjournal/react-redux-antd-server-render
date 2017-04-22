@@ -47,7 +47,7 @@
       }
     },
     "start-dev": {
-      "command": "webpack --config webpack.dev.config.js && babel-node ./bin/index.js",
+      "command": "webpack --config webpack.devServer.config.js && babel-node ./bin/index.js",
       "env": {
         "NODE_ENV": "development",
         "BABEL_ENV": "development"

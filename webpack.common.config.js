@@ -141,7 +141,7 @@ function server(env) {
         {
           test: /\.(scss|css$)$/,
           exclude: /node_modules/,
-          loader: 'css/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+          loader: 'css/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'
         },
         {
           test: /\.(png|jpg|svg|ico)$/,
