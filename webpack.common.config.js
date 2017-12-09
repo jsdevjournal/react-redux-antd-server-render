@@ -1,9 +1,14 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const cssnext = require('postcss-cssnext');
 const nodeExternals = require('webpack-node-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './src/styles/ant-default-vars.less'), 'utf8'));
+
+process.noDeprecation = true
 
 function ifProd(env, plugin) {
   if (env === 'prod') return plugin
@@ -44,63 +49,92 @@ function client(env) {
       new webpack.DefinePlugin({
         "process.env": {
           'client': JSON.stringify(true),
-          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+          'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }
       }),
+      new webpack.LoaderOptionsPlugin({
+        test: /\.css$/,
+        options: {
+          postcss: cssnext,
+          // required to avoid issue css-loader?modules
+          // this is normally the default value, but when we use
+          // LoaderOptionsPlugin, we must specify it again, otherwise,
+          // context is missing (and css modules names can be broken)!
+          context: __dirname,
+        },
+      }),
       ifDev(env, new webpack.HotModuleReplacementPlugin()),
-      ifProd(env, new webpack.NoErrorsPlugin()),
-      ifProd(env, new webpack.optimize.DedupePlugin()),
-      ifProd(env, new webpack.optimize.OccurrenceOrderPlugin()),
+      ifProd(env, new webpack.NoEmitOnErrorsPlugin()),
+      ifProd(env, new webpack.ExtendedAPIPlugin()),
+      ifProd(env, new webpack.LoaderOptionsPlugin({
+        minimize: true
+      })),
       ifProd(env, new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
+        sourceMap: true,
         compress: {
           warnings: false
         }
-      }))
+      })),
     ]),
     resolve: {
-      root: path.resolve('./src'),
-      extensions: ['', '.js']
+      modules: [
+        path.join(__dirname, 'src'),
+        'node_modules'
+      ],
+      extensions: ['.js']
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.js$/,
-          loader: 'babel',
+          loader: 'babel-loader',
           exclude: /node_modules/,
           include: __dirname,
           query: {
             plugins: [
-              ['import', { libraryName: 'antd', style: 'css' }]
+              ['import', { libraryName: 'antd', style: true }]
             ],
           }
         },
         {
-          test: /\.(scss|css$)$/,
+          test: /\.less$/,
           include: [/node_modules\/.*antd/],
-          loader: ExtractTextPlugin.extract('style', 'css')
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'less-loader?{"modifyVars":'+JSON.stringify(themeVariables)+'}'],
+          })
+        },
+        {
+          test: /\.(scss|css$)$/,
+          include: [/node_modules\/react-credit-cards/],
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader'],
+          })
         },
         {
           test: /\.(scss|css$)$/,
           exclude: /node_modules/,
-          loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass')
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader'],
+          })
         },
         {
           test: /\.(png|jpg|svg|ico)$/,
-          loader: "file?name=images/[name].[ext]"
+          loader: 'file-loader',
+          options: {
+            name: 'images/[name].[ext]'
+          }
         },
         {
           test: /\.(ttf|woff|eot|ttf|otf|woff2)$/,
-          loader: "file?name=fonts/[name].[ext]"
+          loader: 'file-loader',
+          options: {
+            name: 'fonts/[name].[ext]'
+          }
         },
       ]
-    },
-    postcss: function(webpack) {
-      return {
-        plugins: [
-          cssnext
-        ]
-      };
     }
   }
 }
@@ -121,35 +155,55 @@ function server(env) {
     plugins: noUndefined([
       new webpack.DefinePlugin({
         "process.env": {
-          'client': JSON.stringify(false),
-          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+          'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }
       }),
     ]),
     resolve: {
-      root: path.resolve('./src'),
-      extensions: ['', '.js']
+      modules: [
+        path.join(__dirname, 'src'),
+        'node_modules'
+      ],
+      extensions: ['.js']
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.js$/,
-          loader: 'babel',
+          loader: 'babel-loader',
           exclude: /node_modules/,
           include: __dirname,
         },
         {
           test: /\.(scss|css$)$/,
           exclude: /node_modules/,
-          loader: 'css/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass'
+          use: [
+            {
+              loader: 'css-loader/locals',
+              options: {
+                modules: true,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
+            },
+            {
+              loader: 'sass-loader',
+            }
+          ]
         },
         {
           test: /\.(png|jpg|svg|ico)$/,
-          loader: "file?name=images/[name].[ext]"
+          loader: 'file-loader',
+          options: {
+            name: 'images/[name].[ext]'
+          }
         },
         {
           test: /\.(ttf|woff|eot|ttf|otf|woff2)$/,
-          loader: "file?name=fonts/[name].[ext]"
+          loader: 'file-loader',
+          options: {
+            name: 'fonts/[name].[ext]'
+          }
         },
       ]
     }
