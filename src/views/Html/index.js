@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { renderToString } from 'react-dom/server'
 import serialize from 'serialize-javascript'
 
@@ -13,11 +13,6 @@ import serialize from 'serialize-javascript'
  */
 
 export default class Html extends Component {
-
-  static propTypes = {
-    component: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired,
-  }
 
   render() {
     const { store, component } = this.props

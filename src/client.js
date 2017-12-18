@@ -4,6 +4,7 @@ import AppRoot from './AppRoot'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import createStore from 'stores/createStore'
+import 'antd/lib/style/v2-compatible-reset'
 
 document.getElementById('initial-data').innerHTML = ''
 

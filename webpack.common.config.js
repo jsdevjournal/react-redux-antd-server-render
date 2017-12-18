@@ -106,18 +106,22 @@ function client(env) {
         },
         {
           test: /\.(scss|css$)$/,
-          include: [/node_modules\/react-credit-cards/],
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader'],
-          })
-        },
-        {
-          test: /\.(scss|css$)$/,
           exclude: /node_modules/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader'],
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  importLoaders: 1,
+                  localIdentName: '[name]__[local]___[hash:base64:5]'
+                }
+              },
+              {
+                loader: 'sass-loader',
+              }
+            ]
           })
         },
         {
